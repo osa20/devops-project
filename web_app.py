@@ -4,7 +4,6 @@ from method_type import get_user
 app = Flask(__name__)
 
 
-#
 # # accessed via <HOST>:<PORT>/get_user_name/<user_id>
 # Web interface returns the user name of a given user id  stored inside users table
 @app.route('/get_user_name/<user_id>')

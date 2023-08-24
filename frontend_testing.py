@@ -10,9 +10,7 @@ def frontend_testings_func(user_id):
     global user_name
     global driver
     try:
-        # Starting a Selenium Webdriver session
-        driver = webdriver.Chrome(service=Service("/Users/osamedeasemota/Downloads/chromedriver-mac-x64/chromedriver"))
-        # driver = webdriver.Chrome(service=Service())
+        driver = webdriver.Chrome(service=Service())
         driver.implicitly_wait(10)
 
         # Navigating to web interface URL using an existing user id
@@ -39,5 +37,5 @@ def frontend_testings_func(user_id):
 time.sleep(5)
 
 # For performing frontend testing
-if __name__ == '__main__':
-    frontend_testings_func(1)
+# if __name__ == '__main__':
+#     frontend_testings_func(1)
