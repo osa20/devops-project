@@ -37,5 +37,5 @@ def frontend_testings_func(user_id):
 time.sleep(5)
 
 # For performing frontend testing
-# if __name__ == '__main__':
-#     frontend_testings_func(1)
+if __name__ == '__main__':
+    frontend_testings_func(1)

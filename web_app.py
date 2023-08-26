@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask
 from method_type import get_user
 
 app = Flask(__name__)

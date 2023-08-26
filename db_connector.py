@@ -13,7 +13,8 @@ def add_user(user_id, user_name, creation_date):
     cursor = conn.cursor()
 
     # Inserting user data into table
-    cursor.execute(f"INSERT into {schema_name}.users (user_id, user_name, creation_date) VALUES ({user_id}, '{user_name}', '{creation_date}')")
+    cursor.execute(
+        f"INSERT into {schema_name}.users (user_id, user_name, creation_date) VALUES ({user_id}, '{user_name}', '{creation_date}')")
 
     cursor.close()
     conn.close()

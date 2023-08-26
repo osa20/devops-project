@@ -5,7 +5,7 @@ import pymysql
 def get_user(user_id):
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -18,15 +18,12 @@ def get_user(user_id):
     for row in cursor:
         return row
 
-    # cursor.close()
-    # conn.close()
-
 
 # Creating a function for POST method
 def create_user(user_id, user_name, creation_date):
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -36,16 +33,13 @@ def create_user(user_id, user_name, creation_date):
     return cursor.execute(
         f"INSERT into mydb.users (user_id, user_name, creation_date) VALUES ({user_id}, '{user_name}', '{creation_date}')")
 
-    # cursor.close()
-    # conn.close()
-
 
 # Creating a function for PUT method
 def update_user(user_id, user_name):
     schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -54,16 +48,13 @@ def update_user(user_id, user_name):
     # updating user data in database table
     return cursor.execute(f"UPDATE {schema_name}.users SET user_name = '{user_name}' WHERE user_id = {user_id}")
 
-    # cursor.close()
-    # conn.close()
-
 
 # Creating a function for DELETE method
 def delete_user(user_id):
     schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3306, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -71,6 +62,3 @@ def delete_user(user_id):
 
     # deleting user data in database table
     return cursor.execute(f"DELETE FROM {schema_name}.users WHERE user_id = {user_id}")
-
-    # cursor.close()
-    # conn.close()
