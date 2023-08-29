@@ -1,5 +1,8 @@
+import os
+import signal
 from flask import Flask, request, jsonify
 from method_type import get_user, create_user, update_user, delete_user
+
 
 app = Flask(__name__)
 
@@ -56,6 +59,18 @@ def user(user_id):
         if not user_data:
             return jsonify({'reason': 'no such id', 'status': 'error'}), 500
         return jsonify({'user_deleted': user_id, 'status': 'ok'}), 200
+
+
+# Adding automatic termination to the REST API server
+@app.route('/stop_server')
+def stop_server():
+    os.kill(os.getpid(), signal.CTRL_C_EVENT)
+    return 'Server stopped'
+
+
+@app.errorhandler(404)
+def resource_not_found(err):
+    return jsonify(error=str(err)), 404
 
 
 app.run(host='127.0.0.1', debug=True, port=5000)
