@@ -11,10 +11,8 @@ pipeline {
         }
         stage('Install Python Packages') {
             steps {
-                script {
-                    bat 'pip install --user -r requirements.txt'
-                }
-            }
+                bat 'virtualenv venv && . venv/bin/activate && pip install -r requirements.txt'
+             }
         }
         stage('Run Backend Server') {
             steps {
