@@ -26,21 +26,21 @@ pipeline {
         stage('run backend testing') {
             steps {
                 script {
-                    bat 'backend_testing.py'
+                    bat 'python backend_testing.py'
                 }
             }
         }
         stage('run frontend testing') {
             steps {
                 script {
-                    bat 'frontend_testing.py'
+                    bat 'python frontend_testing.py'
                 }
             }
         }
         stage('run clean environment') {
             steps {
                 script {
-                    bat 'clean_environment.py'
+                    bat 'python clean_environment.py'
                 }
             }
         }
