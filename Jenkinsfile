@@ -11,7 +11,9 @@ pipeline {
         }
         stage('Install Python Packages') {
             steps {
-                bat 'pip install --user -r requirements.txt'
+                script {
+                    bat 'pip install --user -r requirements.txt'
+                }
             }
         }
         stage('Run Backend Server') {
