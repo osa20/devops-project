@@ -10,9 +10,11 @@ pipeline {
             }
         }
         stage('Install Python Packages') {
-            steps {
-                bat 'virtualenv venv && . venv/bin/activate && pip install -r requirements.txt'
-             }
+             steps {
+                withEnv(["HOME=${env.WORKSPACE}"]) {
+                    bat 'pip install --user -r requirements.txt'
+                }
+            }
         }
         stage('Run Backend Server') {
             steps {
