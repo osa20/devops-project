@@ -12,21 +12,21 @@ pipeline {
         stage('run backend server') {
             steps {
                 script {
-                    bat 'start/min python rest_app.py'
+                    bat 'start/min python3 rest_app.py'
                 }
             }
         }
         stage('run frontend server') {
             steps {
                 script {
-                    bat 'start/min python web_app.py'
+                    bat 'start/min python3 web_app.py'
                 }
             }
         }
         stage('run backend testing') {
             steps {
                 script {
-                    bat 'python backend_testing.py'
+                    bat 'python3 backend_testing.py'
                 }
             }
         }
