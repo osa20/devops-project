@@ -4,40 +4,45 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     stages {
-        stage('checkout') {
+        stage('Checkout Git Repo') {
             steps {
                 git 'https://github.com/osa20/devops-project-first.git'
             }
         }
-        stage('run backend server') {
+        stage('Install Python Packages') {
+            steps {
+                bat 'pip install --user -r requirements.txt'
+            }
+        }
+        stage('Run Backend Server') {
             steps {
                 script {
                     bat 'start/min python rest_app.py'
                 }
             }
         }
-        stage('run frontend server') {
+        stage('Run Frontend Server') {
             steps {
                 script {
                     bat 'start/min python web_app.py'
                 }
             }
         }
-        stage('run backend testing') {
+        stage('Run Backend Testing') {
             steps {
                 script {
                     bat 'python backend_testing.py'
                 }
             }
         }
-        stage('run frontend testing') {
+        stage('Run Frontend Testing') {
             steps {
                 script {
                     bat 'python frontend_testing.py'
                 }
             }
         }
-        stage('run clean environment') {
+        stage('Run Clean Environment') {
             steps {
                 script {
                     bat 'python clean_environment.py'
