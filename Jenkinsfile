@@ -42,6 +42,13 @@ pipeline {
                 }
             }
         }
+        stage('Run Combined Testing') {
+            steps {
+                script {
+                    bat 'python combined_testing.py'
+                }
+            }
+        }
         stage('Run Clean Environment') {
             steps {
                 script {
