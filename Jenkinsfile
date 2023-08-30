@@ -4,6 +4,13 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     stages {
+        stage('Build Triggers') {
+            steps {
+                triggers {
+                     pollSCM 'H/30 * * * * '
+                }
+            }
+        }
         stage('Checkout Codes') {
             steps {
                 git 'https://github.com/osa20/devops-project-first.git'
