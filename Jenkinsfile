@@ -1,7 +1,7 @@
 pipeline {
     agent any
     triggers {
-        pollSCM('H/5 * * * *')
+        pollSCM('H/30 * * * *')
     }
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
