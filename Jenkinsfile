@@ -4,16 +4,14 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     stages {
-        stage('Checkout Git Repo') {
+        stage('Checkout Codes') {
             steps {
                 git 'https://github.com/osa20/devops-project-first.git'
             }
         }
         stage('Install Python Packages') {
              steps {
-                withEnv(["HOME=${env.WORKSPACE}"]) {
-                    bat 'pip install --user -r requirements.txt'
-                }
+                bat 'pip install --user -r requirements.txt'
             }
         }
         stage('Run Backend Server') {
