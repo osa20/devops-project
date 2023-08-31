@@ -26,4 +26,4 @@ def combined_testing_func(user_id, username, creation_date):
 
 # For performing combined testing
 if __name__ == '__main__':
-    combined_testing_func(13, "Lanky", "2023-08-30")
+    combined_testing_func(15, "Carol", "2023-08-31")
