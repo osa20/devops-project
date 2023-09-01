@@ -9,7 +9,7 @@ pipeline {
     stages {
         stage('Code pull') {
             steps {
-                git 'https://github.com/osa20/devops-project-first.git'
+                git 'https://github.com/osa20/devops-project.git'
             }
         }
         stage('Install python packages') {
