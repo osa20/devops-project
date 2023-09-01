@@ -14,48 +14,85 @@ pipeline {
         }
         stage('Install python packages') {
              steps {
-                bat 'pip install --user -r requirements.txt'
+                if (isUnix()) {
+                    //Linux Environment
+                    sh 'pip install --user -r requirements.txt'
+                }
+                else {
+                    //Windows Environment
+                    bat 'pip install --user -r requirements.txt'
+                }
             }
         }
         stage('Run backend server') {
             steps {
                 script {
-                    bat 'start/min python rest_app.py'
+                    if (isUnix()) {
+                        sh 'nohup python rest_app.py &'
+                    }
+                    else {
+                        bat 'start/min python rest_app.py'
+                    }
                 }
             }
         }
         stage('Run frontend server') {
             steps {
                 script {
-                    bat 'start/min python web_app.py'
+                    if (isUnix()) {
+                        sh 'nohup python web_app.py &'
+                    }
+                    else {
+                        bat 'start/min python web_app.py'
+                    }
                 }
             }
         }
         stage('Run backend testing') {
             steps {
                 script {
-                    bat 'python backend_testing.py'
+                    if (isUnix()) {
+                        sh 'python backend_testing.py'
+                    }
+                    else {
+                        bat 'python backend_testing.py'
+                    }
                 }
             }
         }
         stage('Run frontend testing') {
             steps {
                 script {
-                    bat 'python frontend_testing.py'
+                    if (isUnix()) {
+                        sh 'python frontend_testing.py'
+                    }
+                    else {
+                        bat 'python frontend_testing.py'
+                    }
                 }
             }
         }
         stage('Run combined testing') {
             steps {
                 script {
-                    bat 'python combined_testing.py'
+                    if (isUnix()) {
+                        sh 'python combined_testing.py'
+                    }
+                    else {
+                        bat 'python combined_testing.py'
+                    }
                 }
             }
         }
         stage('Run clean environment') {
             steps {
                 script {
-                    bat 'python clean_environment.py'
+                    if (isUnix()) {
+                        sh 'python clean_environment.py'
+                    }
+                    else {
+                        bat 'python clean_environment.py'
+                    }
                 }
             }
         }
