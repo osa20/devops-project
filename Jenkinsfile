@@ -14,8 +14,17 @@ pipeline {
         }
         stage('Install python packages') {
              steps {
-                bat 'pip install --user -r requirements.txt'
-             }
+                script {
+                    if (isUnix()) {
+                        //Unix/MacOS/Linux Environment
+                        sh 'pip install --user -r requirements.txt'
+                    }
+                    else {
+                        //Windows Environment
+                        bat 'pip install --user -r requirements.txt'
+                    }
+                }
+            }
         }
         stage('Run backend server') {
             steps {
@@ -91,16 +100,3 @@ pipeline {
         }
     }
 }
-
-// def getOs(){
-//     String osname = System.getProperty('os.name');
-//     if (osname.startsWith('Windows'))
-//         return 'windows';
-//     else if (osname.startsWith('Mac'))
-//         return 'macosx';
-//     else if (osname.contains('nux'))
-//         return 'linux';
-//     else
-//         throw new Exception("Unsupported os: ${osname}");
-// }
-
