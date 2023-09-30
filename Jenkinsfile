@@ -3,8 +3,8 @@ pipeline {
     registry = "osas23"
     registryCredential = 'docker_hub'
     dockerimage = ''
-    BUILD_NUMBER = "rest_app"
-    IMAGE_TAG = "latest"
+    BUILD_NUMBER = "rest_app:latest"
+//     IMAGE_TAG = "latest"
     }
     agent any
     triggers {
