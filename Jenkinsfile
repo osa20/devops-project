@@ -4,7 +4,7 @@ pipeline {
     registryCredential = 'docker_hub'
     dockerimage = ''
     BUILD_NUMBER = "rest_app:latest"
-//     IMAGE_TAG = "latest"
+    IMAGE_TAG = "latest"
     }
     agent any
     triggers {
