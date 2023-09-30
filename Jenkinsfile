@@ -85,18 +85,18 @@ pipeline {
                 }
             }
         }
-        stage('Set version') {
-            steps {
-                script {
-                    if (isUnix()) {
-                         sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-                    }
-                    else {
-                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-                    }
-                }
-            }
-        }
+//         stage('Set version') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                          sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                     else {
+//                         bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                 }
+//             }
+//         }
         stage('Run containers') {
             steps {
                 script {
