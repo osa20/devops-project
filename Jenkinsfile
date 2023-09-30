@@ -1,8 +1,10 @@
 pipeline {
     environment {
-    registry = "osas23/my_repo"
+    registry = "osas23"
     registryCredential = 'docker_hub'
-    dockerimage = ''
+    dockerimage = 'pythonproject-3-rest_app'
+    BUILD_NUMBER = "7ca97691144a"
+    IMAGE_TAG = "latest"
     }
     agent any
     triggers {
@@ -71,7 +73,7 @@ pipeline {
         stage('Build and push image') {
             steps {
                 script {
-                    dockerimage = docker.build registry + "256b81c3e345122739eef4523a5f749c42f39d4f4fe63609cd5a29b93bc88b19"
+                    dockerimage = docker.build registry + "$BUILD_NUMBER"
                     docker.withRegistry('', registryCredential) {
                         dockerimage.push()
                     }
@@ -79,7 +81,7 @@ pipeline {
             }
             post {
                 always {
-                    bat "docker rmi:256b81c3e345122739eef4523a5f749c42f39d4f4fe63609cd5a29b93bc88b19"
+                    bat "docker rmi $registry:$BUILD_NUMBER"
                 }
             }
         }
@@ -87,10 +89,10 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "echo IMAGE_TAG=${rest_app}>.env"
+                         sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
                     }
                     else {
-                        bat "echo IMAGE_TAG={rest_app}>.env"
+                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
                     }
                 }
             }
