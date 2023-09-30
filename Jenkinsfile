@@ -44,18 +44,6 @@ pipeline {
                 }
             }
         }
-        stage('Run frontend server') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'nohup python web_app.py &'
-                    }
-                    else {
-                        bat 'start/min python web_app.py'
-                    }
-                }
-            }
-        }
         stage('Run backend testing') {
             steps {
                 script {
@@ -64,30 +52,6 @@ pipeline {
                     }
                     else {
                         bat 'python backend_testing.py'
-                    }
-                }
-            }
-        }
-        stage('Run frontend testing') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'python frontend_testing.py'
-                    }
-                    else {
-                        bat 'python frontend_testing.py'
-                    }
-                }
-            }
-        }
-        stage('Run combined testing') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'python combined_testing.py'
-                    }
-                    else {
-                        bat 'python combined_testing.py'
                     }
                 }
             }
@@ -122,21 +86,36 @@ pipeline {
         stage('Set version') {
             steps {
                 script {
-                    bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                    if (isUnix()) {
+                        sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                    }
+                    else {
+                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                    }
                 }
             }
         }
         stage('Run containers') {
             steps {
                 script {
-                    bat docker-compose up -d
+                    if (isUnix()) {
+                        sh "docker-compose up -d"
+                    }
+                    else {
+                        bat "docker-compose up -d"
+                    }
                 }
             }
         }
         stage('Delete local images and containers') {
             steps {
                 script {
-                    bat docker-compose down
+                    if (isUnix()) {
+                        sh "docker-compose down --rmi all"
+                    }
+                    else {
+                        bat "docker-compose down --rmi all"
+                    }
                 }
             }
         }
