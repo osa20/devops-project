@@ -1,4 +1,9 @@
 pipeline {
+    environment {
+    registry = "osas23/my_repo"
+    registryCredential = 'docker_hub'
+    dockerimage = ''
+    }
     agent any
     triggers {
         pollSCM('H/30 * * * *')
@@ -7,11 +12,12 @@ pipeline {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
     stages {
-        stage('Code pull') {
+        stage('Pull Code') {
             steps {
                 git 'https://github.com/osa20/devops-project.git'
             }
         }
+
         stage('Install python packages') {
              steps {
                 script {
@@ -95,6 +101,42 @@ pipeline {
                     else {
                         bat 'python clean_environment.py'
                     }
+                }
+            }
+        }
+        stage('Build and push image') {
+            steps {
+                script {
+                    dockerimage = docker.build registry + "$BUILD_NUMBER"
+                    docker.withRegistry('', registryCredential) {
+                        dockerimage.push()
+                    }
+                }
+            }
+            post {
+                always {
+                    bat "docker rmi $registry:$BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Set version') {
+            steps {
+                script {
+                    bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                }
+            }
+        }
+        stage('Run containers') {
+            steps {
+                script {
+                    bat docker-compose up -d
+                }
+            }
+        }
+        stage('Delete local images and containers') {
+            steps {
+                script {
+                    bat docker-compose down
                 }
             }
         }
