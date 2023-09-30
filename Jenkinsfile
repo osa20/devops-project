@@ -4,7 +4,7 @@ pipeline {
     registryCredential = 'docker_hub'
     dockerimage = ''
     BUILD_NUMBER = "rest_app"
-    IMAGE_TAG = "latest"
+//     IMAGE_TAG = "latest"
     }
     agent any
     triggers {
@@ -101,9 +101,11 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
+                        sh "docker-compose build"
                         sh "docker-compose up -d"
                     }
                     else {
+                        bat "docker-compose build"
                         bat "docker-compose up -d"
                     }
                 }
