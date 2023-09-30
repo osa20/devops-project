@@ -71,7 +71,7 @@ pipeline {
         stage('Build and push image') {
             steps {
                 script {
-                    dockerimage = docker.build registry + "rest_app"
+                    dockerimage = docker.build registry + "256b81c3e345122739eef4523a5f749c42f39d4f4fe63609cd5a29b93bc88b19"
                     docker.withRegistry('', registryCredential) {
                         dockerimage.push()
                     }
@@ -79,7 +79,7 @@ pipeline {
             }
             post {
                 always {
-                    bat "docker rmi $registry:rest_app"
+                    bat "docker rmi:256b81c3e345122739eef4523a5f749c42f39d4f4fe63609cd5a29b93bc88b19"
                 }
             }
         }
