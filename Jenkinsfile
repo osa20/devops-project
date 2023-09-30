@@ -71,7 +71,7 @@ pipeline {
         stage('Build and push image') {
             steps {
                 script {
-                    dockerimage = docker.build registry + "$BUILD_NUMBER"
+                    dockerimage = docker.build registry + "rest_app"
                     docker.withRegistry('', registryCredential) {
                         dockerimage.push()
                     }
@@ -79,7 +79,7 @@ pipeline {
             }
             post {
                 always {
-                    bat "docker rmi $registry:$BUILD_NUMBER"
+                    bat "docker rmi $registry:rest_app"
                 }
             }
         }
@@ -87,10 +87,10 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                        sh "echo IMAGE_TAG=${rest_app}>.env"
                     }
                     else {
-                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                        bat "echo IMAGE_TAG={rest_app}>.env"
                     }
                 }
             }
