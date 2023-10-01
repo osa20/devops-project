@@ -1,5 +1,8 @@
 import pymysql
 import requests
+import time
+
+time.sleep(180)
 
 
 def backend_testings_func(user_id, user_name, creation_date):
