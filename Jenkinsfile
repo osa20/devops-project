@@ -114,9 +114,11 @@ pipeline {
                 script {
                     if (isUnix()) {
                         sh "docker-compose down --rmi all"
+//                         sh "docker-compose down"
                     }
                     else {
                         bat "docker-compose down --rmi all"
+//                         sh "docker-compose down"
                     }
                 }
             }
