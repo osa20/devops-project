@@ -32,6 +32,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Create MySQL Container') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'docker run --name mysql -v C:/Users/osame/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3309:3306 -d mysql:8.0.33'
+                    }
+                    else {
+                        bat 'docker run --name mysql -v C:/Users/osame/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3309:3306 -d mysql:8.0.33'
+                    }
+                }
+            }
+        }
+
         stage('Run backend server') {
             steps {
                 script {
@@ -56,18 +70,31 @@ pipeline {
                 }
             }
         }
+
         stage('Run clean environment') {
             steps {
                 script {
                     if (isUnix()) {
                         sh 'python clean_environment.py'
-                        sh "docker-compose build"
-                        sh "docker-compose up -d"
                     }
                     else {
                         bat 'python clean_environment.py'
-                        bat "docker-compose down"
-                        bat "docker-compose down --rmi all"
+                    }
+                }
+            }
+        }
+        stage('Delete the containers created locally') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh "docker stop mysql"
+                        sh "docker rm mysql"
+                        sh "docker rmi mysql:8.0.33"
+                    }
+                    else {
+                        bat "docker stop mysql"
+                        bat "docker rm mysql"
+                        bat "docker rmi mysql:8.0.33"
                     }
                 }
             }
@@ -117,12 +144,14 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
+                        sh "docker-compose stop"
                         sh "docker-compose down"
-                        sh "docker-compose down --rmi all"
+                        sh "docker-compose down --rmi all -v --remove-orphans"
                     }
                     else {
+                        bat "docker-compose stop"
                         bat "docker-compose down"
-                        bat "docker-compose down --rmi all"
+                        bat "docker-compose down --rmi all -v --remove-orphans"
                     }
                 }
             }
