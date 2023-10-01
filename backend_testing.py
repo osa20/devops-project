@@ -73,4 +73,4 @@ def backend_testings_func(user_id, user_name, creation_date):
 
 # # For carrying out the backend testing
 if __name__ == '__main__':
-    backend_testings_func(14, "Tom", "2023-08-31")
+    backend_testings_func(14, "Timothy", "2023-08-31")

@@ -33,7 +33,7 @@ pipeline {
             }
         }
 
-        stage('Create MySQL Container') {
+        stage('Run a local MySQL Container') {
             steps {
                 script {
                     if (isUnix()) {
@@ -45,7 +45,18 @@ pipeline {
                 }
             }
         }
-
+        stage('Create database table and populate it') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'python db_connector.py'
+                    }
+                    else {
+                        bat 'python db_connector.py'
+                    }
+                }
+            }
+        }
         stage('Run backend server') {
             steps {
                 script {
@@ -83,7 +94,7 @@ pipeline {
                 }
             }
         }
-        stage('Delete the containers created locally') {
+        stage('Delete local MySQL container and images') {
             steps {
                 script {
                     if (isUnix()) {
@@ -99,33 +110,33 @@ pipeline {
                 }
             }
         }
-//         stage('Build and push image') {
-//             steps {
-//                 script {
-//                     dockerimage = docker.build registry + "$BUILD_NUMBER"
-//                     docker.withRegistry('', registryCredential) {
-//                         dockerimage.push()
-//                     }
-//                 }
-//             }
-//             post {
-//                 always {
-//                     bat "docker rmi $BUILD_NUMBER"
-//                 }
-//             }
-//         }
-//         stage('Set version') {
-//             steps {
-//                 script {
-//                     if (isUnix()) {
-//                          sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-//                     }
-//                     else {
-//                         bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-//                     }
-//                 }
-//             }
-//         }
+        stage('Build and push image') {
+            steps {
+                script {
+                    dockerimage = docker.build registry + "$BUILD_NUMBER"
+                    docker.withRegistry('', registryCredential) {
+                        dockerimage.push()
+                    }
+                }
+            }
+            post {
+                always {
+                    bat "docker rmi $BUILD_NUMBER"
+                }
+            }
+        }
+        stage('Set version') {
+            steps {
+                script {
+                    if (isUnix()) {
+                         sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                    }
+                    else {
+                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                    }
+                }
+            }
+        }
         stage('Run containers') {
             steps {
                 script {
@@ -140,21 +151,21 @@ pipeline {
                 }
             }
         }
-        stage('Delete local images and containers') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh "docker-compose stop"
-                        sh "docker-compose down"
-                        sh "docker-compose down --rmi all -v --remove-orphans"
-                    }
-                    else {
-                        bat "docker-compose stop"
-                        bat "docker-compose down"
-                        bat "docker-compose down --rmi all -v --remove-orphans"
-                    }
-                }
-            }
-        }
+//         stage('Delete local images and containers') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                         sh "docker-compose stop"
+//                         sh "docker-compose down"
+//                         sh "docker-compose down --rmi all -v --remove-orphans"
+//                     }
+//                     else {
+//                         bat "docker-compose stop"
+//                         bat "docker-compose down"
+//                         bat "docker-compose down --rmi all -v --remove-orphans"
+//                     }
+//                 }
+//             }
+//         }
     }
 }
