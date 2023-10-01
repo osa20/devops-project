@@ -10,19 +10,14 @@ pipeline {
 //         registry = "osas23"
 //         registryCredential = 'docker_hub'
 //         dockerimage = ''
-//         IMAGE_VERSION = "${BUILD_NUMBER}"  // Use the build number as the image version
-//         IMAGE_TAG = "${BUILD_NUMBER}"  // Define IMAGE_TAG here
 //     }
-//     environment {
-//         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-//     }
+
     stages {
         stage('Pull Code') {
             steps {
                 git 'https://github.com/osa20/devops-project.git'
             }
         }
-
         stage('Install python packages') {
              steps {
                 script {
@@ -37,7 +32,6 @@ pipeline {
                 }
             }
         }
-
         stage('Run a local MySQL Container') {
             steps {
                 script {
@@ -128,18 +122,6 @@ pipeline {
             }
         }
 
-//         stage('Login to Docker Hub') {
-//             steps {
-//                 script {
-//                     if (isUnix()) {
-//                         sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                     }
-//                     else {
-//                         bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
-//                     }
-//                 }
-//             }
-//         }
         stage('Login to Docker Hub') {
             steps {
                 script {
@@ -152,13 +134,13 @@ pipeline {
                 }
             }
         }
-        stage('Push docker-compose images') {
+        stage('Push docker-compose images to Docker Hub') {
             steps {
                 script {
                     if (isUnix()) {
                         sh "docker tag project_third-db_connector osas23/db_connector"
                         sh "docker tag project_third-rest_app osas23/rest_app"
-                        sh "docker tag project_third-backend_testing_app osas/backend_testing_app"
+                        sh "docker tag project_third-backend_testing_app osas23/backend_testing_app"
                         sh "docker push osas23/db_connector"
                         sh "docker push osas23/rest_app"
                         sh "docker push osas23/backend_testing_app"
@@ -166,7 +148,7 @@ pipeline {
                     else {
                         bat "docker tag project_third-db_connector osas23/db_connector"
                         bat "docker tag project_third-rest_app osas23/rest_app"
-                        bat "docker tag project_third-backend_testing_app osas/backend_testing_app"
+                        bat "docker tag project_third-backend_testing_app osas23/backend_testing_app"
                         bat "docker push osas23/db_connector"
                         bat "docker push osas23/rest_app"
                         bat "docker push osas23/backend_testing_app"
