@@ -138,7 +138,7 @@ pipeline {
                         sh "docker push osas23/backend_testing_app"
                     }
                     else {
-                        bat "docker login --username=osas23 --email=osamede.asemota@yahoo.com"
+                        bat "docker login --username=osas23"
                         bat "docker tag project_third-db_connector osas23/db_connector"
                         bat "docker tag project_third-rest_app osas23/rest_app"
                         bat "docker tag project_third-backend_testing_app osas/backend_testing_app"
