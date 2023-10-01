@@ -17,9 +17,7 @@ services:
       - 3306
 
   db_connector:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile-connector
+    build: .
     container_name: dbConnector
     ports:
       - "5002:5002"
@@ -37,10 +35,8 @@ services:
       - WAIT_HOST_CONNECT_TIMEOUT=30
 
   rest_app:
-    build:
-      context: ./
-      dockerfile: ./Dockerfile
-    container_name: rest_app
+    build: .
+    container_name: restApp
     command: python rest_app.py
     ports:
       - "5000:5000"
