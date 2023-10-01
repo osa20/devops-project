@@ -1,5 +1,6 @@
-# devops-project-first
-The project goal is to build a Python frontend and backend stack.
+# devops-project
+The initial project goal is to build a Python frontend and backend stack.
+The project extension goal is extended to create a backend stack in a docker container and to test the backend server with a dockerized backend testing app.
 
 The method_type.py file creates the functions for the REST API methods: GET, POST, PUT and DELETE.
 
