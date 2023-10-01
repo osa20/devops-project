@@ -3,8 +3,6 @@ pipeline {
     registry = "osas23"
     registryCredential = 'docker_hub'
     dockerimage = ''
-    BUILD_NUMBER = "osas23/rest_app"
-    IMAGE_TAG = "latest"
     }
     agent any
     triggers {
@@ -70,33 +68,33 @@ pipeline {
                 }
             }
         }
-        stage('Build and push image') {
-            steps {
-                script {
-                    dockerimage = docker.build registry + "$BUILD_NUMBER"
-                    docker.withRegistry('', registryCredential) {
-                        dockerimage.push()
-                    }
-                }
-            }
-            post {
-                always {
-                    bat "docker rmi $BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Set version') {
-            steps {
-                script {
-                    if (isUnix()) {
-                         sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-                    }
-                    else {
-                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
-                    }
-                }
-            }
-        }
+//         stage('Build and push image') {
+//             steps {
+//                 script {
+//                     dockerimage = docker.build registry + "$BUILD_NUMBER"
+//                     docker.withRegistry('', registryCredential) {
+//                         dockerimage.push()
+//                     }
+//                 }
+//             }
+//             post {
+//                 always {
+//                     bat "docker rmi $BUILD_NUMBER"
+//                 }
+//             }
+//         }
+//         stage('Set version') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                          sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                     else {
+//                         bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                 }
+//             }
+//         }
         stage('Run containers') {
             steps {
                 script {
