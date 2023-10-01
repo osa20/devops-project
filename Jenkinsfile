@@ -94,7 +94,34 @@ pipeline {
                 }
             }
         }
-
+        stage('Delete local MySQL container and images') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh "docker stop mysql"
+                        sh "docker rm mysql"
+                        sh "docker rmi mysql:8.0.33"
+                    }
+                    else {
+                        bat "docker stop mysql"
+                        bat "docker rm mysql"
+                        bat "docker rmi mysql:8.0.33"
+                    }
+                }
+            }
+        }
+        stage('Build docker-compose images') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh "docker-compose build"
+                    }
+                    else {
+                        bat "docker-compose build"
+                    }
+                }
+            }
+        }
         stage('Build and push image') {
             steps {
                 script {
@@ -122,22 +149,7 @@ pipeline {
                 }
             }
         }
-        stage('Delete local MySQL container and images') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh "docker stop mysql"
-                        sh "docker rm mysql"
-                        sh "docker rmi mysql:8.0.33"
-                    }
-                    else {
-                        bat "docker stop mysql"
-                        bat "docker rm mysql"
-                        bat "docker rmi mysql:8.0.33"
-                    }
-                }
-            }
-        }
+
         stage('Run containers') {
             steps {
                 script {
