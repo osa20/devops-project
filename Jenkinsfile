@@ -13,9 +13,9 @@ pipeline {
 //         IMAGE_VERSION = "${BUILD_NUMBER}"  // Use the build number as the image version
 //         IMAGE_TAG = "${BUILD_NUMBER}"  // Define IMAGE_TAG here
 //     }
-    environment {
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
-    }
+//     environment {
+//         DOCKERHUB_CREDENTIALS = credentials('dockerhub')
+//     }
     stages {
         stage('Pull Code') {
             steps {
@@ -128,14 +128,26 @@ pipeline {
             }
         }
 
+//         stage('Login to Docker Hub') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                         sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+//                     }
+//                     else {
+//                         bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+//                     }
+//                 }
+//             }
+//         }
         stage('Login to Docker Hub') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                        sh "docker login"
                     }
                     else {
-                        bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                        bat "docker login"
                     }
                 }
             }
