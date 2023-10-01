@@ -1,4 +1,7 @@
 import pymysql
+import time
+
+time.sleep(180)
 
 schema_name = "mydb"
 
