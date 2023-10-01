@@ -138,18 +138,14 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "docker tag project_third-db_connector osas23/db_connector"
                         sh "docker tag project_third-rest_app osas23/rest_app"
                         sh "docker tag project_third-backend_testing_app osas23/backend_testing_app"
-                        sh "docker push osas23/db_connector"
                         sh "docker push osas23/rest_app"
                         sh "docker push osas23/backend_testing_app"
                     }
                     else {
-                        bat "docker tag project_third-db_connector osas23/db_connector"
                         bat "docker tag project_third-rest_app osas23/rest_app"
                         bat "docker tag project_third-backend_testing_app osas23/backend_testing_app"
-                        bat "docker push osas23/db_connector"
                         bat "docker push osas23/rest_app"
                         bat "docker push osas23/backend_testing_app"
                     }
