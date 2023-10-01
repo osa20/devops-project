@@ -10,7 +10,7 @@ pipeline {
         registry = "osas23"
         registryCredential = 'docker_hub'
         dockerimage = ''
-//         DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Replace with your Jenkins credentials ID for Docker Hub
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Replace with your Jenkins credentials ID for Docker Hub
         IMAGE_VERSION = "${BUILD_NUMBER}"  // Use the build number as the image version
         IMAGE_TAG = "${BUILD_NUMBER}"  // Define IMAGE_TAG here
     }
@@ -97,7 +97,7 @@ pipeline {
                 }
             }
         }
-        stage('Delete local MySQL container and images') {
+        stage('Delete local MySQL container and image') {
             steps {
                 script {
                     if (isUnix()) {
@@ -125,11 +125,23 @@ pipeline {
                 }
             }
         }
+
+        stage('Login to Docker Hub') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    }
+                    else {
+                        bat "echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin"
+                    }
+                }
+            }
+        }
         stage('Push docker-compose images') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "docker login --username=osas23 --email=osamede.asemota@yahoo.com"
                         sh "docker tag project_third-db_connector osas23/db_connector"
                         sh "docker tag project_third-rest_app osas23/rest_app"
                         sh "docker tag project_third-backend_testing_app osas/backend_testing_app"
@@ -138,7 +150,6 @@ pipeline {
                         sh "docker push osas23/backend_testing_app"
                     }
                     else {
-                        bat "docker login --username=osas23"
                         bat "docker tag project_third-db_connector osas23/db_connector"
                         bat "docker tag project_third-rest_app osas23/rest_app"
                         bat "docker tag project_third-backend_testing_app osas/backend_testing_app"
@@ -149,6 +160,12 @@ pipeline {
                 }
             }
         }
+        post {
+            always {
+                sh 'docker logout'
+            }
+        }
+
 //         stage('Build and push image') {
 //             steps {
 //                 script {
