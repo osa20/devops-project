@@ -6,13 +6,15 @@ pipeline {
     options {
         buildDiscarder(logRotator(numToKeepStr: '20', daysToKeepStr: '5'))
     }
+//     environment {
+//         registry = "osas23"
+//         registryCredential = 'docker_hub'
+//         dockerimage = ''
+//         IMAGE_VERSION = "${BUILD_NUMBER}"  // Use the build number as the image version
+//         IMAGE_TAG = "${BUILD_NUMBER}"  // Define IMAGE_TAG here
+//     }
     environment {
-        registry = "osas23"
-        registryCredential = 'docker_hub'
-        dockerimage = ''
-        DOCKERHUB_CREDENTIALS = credentials('dockerhub') // Replace with your Jenkins credentials ID for Docker Hub
-        IMAGE_VERSION = "${BUILD_NUMBER}"  // Use the build number as the image version
-        IMAGE_TAG = "${BUILD_NUMBER}"  // Define IMAGE_TAG here
+        DOCKERHUB_CREDENTIALS = credentials('dockerhub')
     }
     stages {
         stage('Pull Code') {
