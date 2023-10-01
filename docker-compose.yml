@@ -2,7 +2,6 @@ version: '3'
 services:
   db:
     image: mysql:8.0.33
-    container_name: mysql
     environment:
       - MYSQL_USER=user
       - MYSQL_ROOT_PASSWORD=mysql
@@ -21,7 +20,6 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile-connector
-    container_name: dbConnector
     ports:
       - "5002:5002"
     volumes:
@@ -41,7 +39,6 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile
-    container_name: rest_app
     command: python rest_app.py
     ports:
       - "5000:5000"
@@ -58,7 +55,6 @@ services:
     build:
       context: ./
       dockerfile: ./Dockerfile-test
-    container_name: backendTesting
     ports:
       - "5001:5001"
     volumes:

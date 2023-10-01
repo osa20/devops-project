@@ -113,12 +113,12 @@ pipeline {
             steps {
                 script {
                     if (isUnix()) {
+                        sh "docker-compose down"
                         sh "docker-compose down --rmi all"
-//                         sh "docker-compose down"
                     }
                     else {
+                        sh "docker-compose down"
                         bat "docker-compose down --rmi all"
-//                         sh "docker-compose down"
                     }
                 }
             }
