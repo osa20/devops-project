@@ -191,7 +191,7 @@ pipeline {
                         sh "docker-compose up -d"
                     }
                     else {
-                        bat "docker-compose build"
+                        bat "docker-compose up -d"
                     }
                 }
             }
