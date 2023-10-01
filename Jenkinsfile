@@ -61,9 +61,13 @@ pipeline {
                 script {
                     if (isUnix()) {
                         sh 'python clean_environment.py'
+                        sh "docker-compose build"
+                        sh "docker-compose up -d"
                     }
                     else {
                         bat 'python clean_environment.py'
+                        bat "docker-compose down"
+                        bat "docker-compose down --rmi all"
                     }
                 }
             }
@@ -117,7 +121,7 @@ pipeline {
                         sh "docker-compose down --rmi all"
                     }
                     else {
-                        sh "docker-compose down"
+                        bat "docker-compose down"
                         bat "docker-compose down --rmi all"
                     }
                 }
