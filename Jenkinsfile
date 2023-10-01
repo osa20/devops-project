@@ -125,44 +125,66 @@ pipeline {
                 }
             }
         }
-        stage('Build and push image') {
-            steps {
-                script {
-                    dockerimage = docker.build registry + "$BUILD_NUMBER"
-                    docker.withRegistry('', registryCredential) {
-                        dockerimage.push()
-                    }
-                }
-            }
-            post {
-                always {
-                    bat "docker rmi $BUILD_NUMBER"
-                }
-            }
-        }
-        stage('Set version') {
+        stage('Push docker-compose images') {
             steps {
                 script {
                     if (isUnix()) {
-                         sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                        sh "docker login --username=osas23 --email=osamede.asemota@yahoo.com"
+                        sh "docker tag project_third-db_connector osas23/db_connector"
+                        sh "docker tag project_third-rest_app osas23/rest_app"
+                        sh "docker tag project_third-backend_testing_app osas/backend_testing_app"
+                        sh "docker push osas23/db_connector"
+                        sh "docker push osas23/rest_app"
+                        sh "docker push osas23/backend_testing_app"
                     }
                     else {
-                        bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+                        bat "docker login --username=osas23 --email=osamede.asemota@yahoo.com"
+                        bat "docker tag project_third-db_connector osas23/db_connector"
+                        bat "docker tag project_third-rest_app osas23/rest_app"
+                        bat "docker tag project_third-backend_testing_app osas/backend_testing_app"
+                        bat "docker push osas23/db_connector"
+                        bat "docker push osas23/rest_app"
+                        bat "docker push osas23/backend_testing_app"
                     }
                 }
             }
         }
+//         stage('Build and push image') {
+//             steps {
+//                 script {
+//                     dockerimage = docker.build registry + "$BUILD_NUMBER"
+//                     docker.withRegistry('', registryCredential) {
+//                         dockerimage.push()
+//                     }
+//                 }
+//             }
+//             post {
+//                 always {
+//                     bat "docker rmi $BUILD_NUMBER"
+//                 }
+//             }
+//         }
+//         stage('Set version') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                          sh "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                     else {
+//                         bat "echo IMAGE_TAG=${BUILD_NUMBER}>.env"
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Run containers') {
             steps {
                 script {
                     if (isUnix()) {
-                        sh "docker-compose build"
                         sh "docker-compose up -d"
                     }
                     else {
                         bat "docker-compose build"
-                        bat "docker-compose up -d"
                     }
                 }
             }
