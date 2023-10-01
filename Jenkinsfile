@@ -135,7 +135,7 @@ pipeline {
             }
         }
 
-        stage('Push docker-compose images to Docker Hub') {
+        stage('Push images to Docker Hub') {
             steps {
                 script {
                     if (isUnix()) {
@@ -152,11 +152,6 @@ pipeline {
                         bat "docker push osas23/rest_app"
                         bat "docker push osas23/backend_testing_app"
                     }
-                }
-            }
-            post {
-                always {
-                    sh 'docker logout'
                 }
             }
         }
