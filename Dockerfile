@@ -4,13 +4,4 @@ COPY . /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
-#RUN chmod u+x "db_connector.py"
-
-## Add docker-compose-wait tool -------------------
-#ENV WAIT_VERSION 2.7.2
-#ADD https://github.com/ufoscout/docker-compose-wait/releases/download/$WAIT_VERSION/wait /wait
-#RUN chmod +x /wait
-#
-#EXPOSE 3306
-
-CMD ["python", "rest_app.py"]
+CMD ["python", "rest_app.py", "docker_backend_testing.py"]
