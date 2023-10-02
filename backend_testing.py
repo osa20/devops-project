@@ -1,6 +1,6 @@
 import pymysql
-import requests
 import time
+import requests
 
 time.sleep(180)
 
