@@ -1,14 +1,12 @@
 import pymysql
-import time
 
-time.sleep(180)
-
+#docker'172.21.0.1'
 schema_name = "mydb"
 
 
 def create_table():
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -28,8 +26,8 @@ def create_table():
     conn.close()
 
 
-if __name__ == '__main__':
-    create_table()
+# if __name__ == '__main__':
+#     create_table()
 
 
 #############################
@@ -39,7 +37,7 @@ def add_user(user_id, user_name, creation_date):
     # schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -56,11 +54,13 @@ def add_user(user_id, user_name, creation_date):
     conn.close()
 
 
-if __name__ == '__main__':
-    add_user(1, "Tom", "2023-08-20")
-    add_user(2, "James", "2023-09-27")
-    add_user(3, "David", "2023-09-28")
-    add_user(4, "Greg", "2023-09-29")
-    add_user(5, "Harry", "2023-09-30")
-    add_user(6, "Jane", "2023-09-30")
-    add_user(7, "Ricky", "2023-09-30")
+# if __name__ == '__main__':
+#     add_user(1, "Tom", "2023-08-20")
+#     add_user(2, "James", "2023-09-27")
+#     add_user(3, "David", "2023-09-28")
+#     add_user(4, "Greg", "2023-09-29")
+#     add_user(5, "Harry", "2023-09-30")
+#     add_user(6, "Jane", "2023-09-30")
+#     add_user(7, "Ricky", "2023-09-30")
+#     add_user(8, "Joy", "2023-09-30")
+#     add_user(9, "Roland", "2023-09-30")

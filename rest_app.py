@@ -2,7 +2,19 @@ import os
 import signal
 from flask import Flask, request, jsonify
 from method_type import get_user, create_user, update_user, delete_user
+from db_connector import create_table, add_user
+import time
 
+time.sleep(180)
+
+create_table()
+add_user(1, "Tom", "2023-08-20")
+add_user(2, "James", "2023-09-27")
+add_user(3, "David", "2023-09-28")
+add_user(4, "Greg", "2023-09-29")
+add_user(5, "Harry", "2023-09-30")
+add_user(6, "Jane", "2023-09-30")
+add_user(7, "Ricky", "2023-09-30")
 
 app = Flask(__name__)
 
@@ -73,4 +85,4 @@ def resource_not_found(err):
     return jsonify(error=str(err)), 404
 
 
-app.run(host='127.0.0.1', debug=True, port=5000)
+app.run(host='0.0.0.0', debug=True, port=5000)

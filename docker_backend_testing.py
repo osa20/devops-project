@@ -1,5 +1,9 @@
 import pymysql
 import requests
+import time
+
+# 192.168.99.100
+time.sleep(180)
 
 
 def backend_testings_func(user_id, user_name, creation_date):
@@ -44,7 +48,7 @@ def backend_testings_func(user_id, user_name, creation_date):
     # Checking that posted data was stored inside database (users table)
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -70,4 +74,4 @@ def backend_testings_func(user_id, user_name, creation_date):
 
 # # For carrying out the backend testing
 if __name__ == '__main__':
-    backend_testings_func(1, "Tom", "2023-08-20")
+    backend_testings_func(14, "Jennifer", "2023-08-20")

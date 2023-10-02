@@ -1,11 +1,12 @@
 import pymysql
+from db_connector import create_table
 
 
 # Creating a function for GET method
 def get_user(user_id):
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -21,9 +22,10 @@ def get_user(user_id):
 
 # Creating a function for POST method
 def create_user(user_id, user_name, creation_date):
+    # create_table()
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -39,7 +41,7 @@ def update_user(user_id, user_name):
     schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -54,7 +56,7 @@ def delete_user(user_id):
     schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database

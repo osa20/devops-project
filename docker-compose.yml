@@ -9,35 +9,29 @@ services:
       - MYSQL_PASSWORD=password
       - MYSQL_DATABASE=mydb
       - MYSQL_HOST=localhost
+#      - MYSQL_INITDB=/docker-entrypoint-initdb.d/db_connector.py
+#    volumes:
+#      - C:\Users\osame\mysql:/var/lib/mysql:/docker-entrypoint-initdb.d
+#    volumes:
+#      - C:\Users\osame\mysql:/var/lib/mysql
+#      - ./mysql:/var/lib/mysql
     volumes:
-      - C:\Users\osame\mysql:/var/lib/mysql:/docker-entrypoint-initdb.d
+      - ./mysql:/var/lib/mysql
     ports:
       - "3309:3306"
-    expose:
-      - 3306
-
-  db_connector:
-    build: .
-    container_name: dbConnector
-    ports:
-      - "5002:5002"
-    volumes:
-      - C:\Users\osame\mysql:/var/lib/mysql
-    depends_on:
-      - db
-    links:
-      - "db:mydb"
-    command: sh -c "/wait" && python db_connector.py
-    environment:
-      - WAIT_HOSTS=mysql:3306
-      - WAIT_HOSTS_TIMEOUT=300
-      - WAIT_SLEEP_INTERVAL=30
-      - WAIT_HOST_CONNECT_TIMEOUT=30
+#    expose:
+#      - 3306
 
   rest_app:
     build: .
     container_name: restApp
     command: python rest_app.py
+#    command: sh -c "/wait" && python rest_app.py
+#    environment:
+#      - WAIT_HOSTS=db:3306
+#      - WAIT_HOSTS_TIMEOUT=300
+#      - WAIT_SLEEP_INTERVAL=30
+#      - WAIT_HOST_CONNECT_TIMEOUT=30
     ports:
       - "5000:5000"
     expose:
@@ -45,15 +39,22 @@ services:
     volumes:
       - .:/app
     depends_on:
-      - db_connector
+      - db
     links:
-      - "db_connector"
+      - "db"
 
   backend_testing_app:
     build:
       context: ./
       dockerfile: ./Dockerfile-test
     container_name: backendTest
+    command: python docker_backend_testing.py
+#    command: sh -c "/wait" && python docker_backend_testing.py
+#    environment:
+#      - WAIT_HOSTS=rest_app:5000
+#      - WAIT_HOSTS_TIMEOUT=300
+#      - WAIT_SLEEP_INTERVAL=30
+#      - WAIT_HOST_CONNECT_TIMEOUT=30
     ports:
       - "5001:5001"
     volumes:
@@ -62,9 +63,3 @@ services:
       - rest_app
     links:
       - "rest_app"
-    command: sh -c "/wait" && python docker_backend_testing.py
-    environment:
-      - WAIT_HOSTS=rest_app:5000
-      - WAIT_HOSTS_TIMEOUT=300
-      - WAIT_SLEEP_INTERVAL=30
-      - WAIT_HOST_CONNECT_TIMEOUT=30
