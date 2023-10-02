@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        ./mysql:/var/lib/mysql
+
         stage('Run a local MySQL Container') {
             steps {
                 script {
@@ -40,7 +40,7 @@ pipeline {
                         sh 'docker run --name mysql -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3309:3306 -d mysql:8.0.33'
                     }
                     else {
-                        bat 'docker run --name mysql -v C:/Users/osame/mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3309:3306 -d mysql:8.0.33'
+                        bat 'docker run --name mysql -v ./mysql:/var/lib/mysql -e MYSQL_ROOT_PASSWORD=mysql -e MYSQL_DATABASE=mydb -e MYSQL_USER=user -e MYSQL_PASSWORD=password -p 3309:3306 -d mysql:8.0.33'
                     }
                 }
             }
