@@ -4,4 +4,5 @@ COPY . /app
 RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
+
 CMD ["python", "rest_app.py", "docker_backend_testing.py"]
