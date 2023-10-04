@@ -194,23 +194,23 @@ pipeline {
             }
         }
 
-//         stage('Delete local images and containers') {
-//             steps {
-//                 script {
-//                     if (isUnix()) {
-//                         sh "docker-compose stop"
-//                         sh "docker-compose down"
-//                         sh "docker-compose down --rmi all -v --remove-orphans"
-//                         sh "docker image prune -a"
-//                     }
-//                     else {
-//                         bat "docker-compose stop"
-//                         bat "docker-compose down"
-//                         bat "docker-compose down --rmi all -v --remove-orphans"
-//                         bat "docker image prune -a"
-//                     }
-//                 }
-//             }
-//         }
+        stage('Delete local images and containers') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh "docker-compose stop"
+                        sh "docker-compose down"
+                        sh "docker-compose down --rmi all -v --remove-orphans"
+                        sh "docker image prune -a"
+                    }
+                    else {
+                        bat "docker-compose stop"
+                        bat "docker-compose down"
+                        bat "docker-compose down --rmi all -v --remove-orphans"
+                        bat "docker image prune -a"
+                    }
+                }
+            }
+        }
     }
 }
