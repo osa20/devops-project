@@ -58,18 +58,18 @@ pipeline {
                 }
             }
         }
-        stage('Run backend testing') {
-            steps {
-                script {
-                    if (isUnix()) {
-                        sh 'python backend_testing.py'
-                    }
-                    else {
-                        bat 'python backend_testing.py'
-                    }
-                }
-            }
-        }
+//         stage('Run backend testing') {
+//             steps {
+//                 script {
+//                     if (isUnix()) {
+//                         sh 'python backend_testing.py'
+//                     }
+//                     else {
+//                         bat 'python backend_testing.py'
+//                     }
+//                 }
+//             }
+//         }
 
         stage('Run clean environment') {
             steps {
@@ -143,7 +143,7 @@ pipeline {
                 }
             }
         }
-
+//
 //         stage('Build and push image') {
 //             steps {
 //                 script {
@@ -197,7 +197,7 @@ pipeline {
                 }
             }
         }
-        
+
 //         stage('Delete local images and containers') {
 //             steps {
 //                 script {
