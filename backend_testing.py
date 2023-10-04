@@ -8,7 +8,7 @@ time.sleep(180)
 # url = f"http://192.168.52.77:5000/users/{user_id}"
 def backend_testings_func(user_id, user_name, creation_date):
     global user_data
-    url = f"http://172.17.0.1:5000/users/{user_id}"
+    url = f"http://192.168.52.191:5000/users/{user_id}"
 
     # Postimg a new user data to the REST API using POST method
     try:
