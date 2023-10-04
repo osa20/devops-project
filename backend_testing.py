@@ -47,7 +47,7 @@ def backend_testings_func(user_id, user_name, creation_date):
     # Checking that posted data was stored inside database (users table)
     schema_name = "mydb"
     # Establishing a connection to DB
-    conn = pymysql.connect(host='127.0.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='mysql', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
