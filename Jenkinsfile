@@ -184,6 +184,20 @@ pipeline {
                 }
             }
         }
+
+        stage('Run docker backend testing') {
+            steps {
+                script {
+                    if (isUnix()) {
+                        sh 'python docker_backend_testing.py'
+                    }
+                    else {
+                        bat 'python docker_backend_testing.py'
+                    }
+                }
+            }
+        }
+        
 //         stage('Delete local images and containers') {
 //             steps {
 //                 script {
