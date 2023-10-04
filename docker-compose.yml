@@ -13,6 +13,8 @@ services:
       - ./mysql:/var/lib/mysql
     ports:
       - "3309:3306"
+    expose:
+      - 3306
 
   rest_app:
     build: .
@@ -29,15 +31,15 @@ services:
     links:
       - "db"
 
-  backend_testing_app:
-    build: .
-    container_name: backendTest
-    command: python docker_backend_testing.py
-    ports:
-      - "5001:5001"
-    volumes:
-      - .:/app
-    depends_on:
-      - rest_app
-    links:
-      - "rest_app"
+#  backend_testing_app:
+#    build: .
+#    container_name: backendTest
+#    command: python docker_backend_testing.py
+#    ports:
+#      - "5001:5001"
+#    volumes:
+#      - .:/app
+#    depends_on:
+#      - rest_app
+#    links:
+#      - "rest_app"

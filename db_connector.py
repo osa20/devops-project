@@ -6,7 +6,7 @@ schema_name = "mydb"
 
 def create_table():
     # Establishing a connection to DB
-    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='mysql', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
@@ -37,7 +37,7 @@ def add_user(user_id, user_name, creation_date):
     # schema_name = "mydb"
 
     # Establishing a connection to DB
-    conn = pymysql.connect(host='172.17.0.1', port=3309, user='user', passwd='password', db=schema_name)
+    conn = pymysql.connect(host='mysql', port=3309, user='user', passwd='password', db=schema_name)
     conn.autocommit(True)
 
     # Getting a cursor from Database
